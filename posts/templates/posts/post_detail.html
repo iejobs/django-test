@@ -1,0 +1,38 @@
+<h1>{{ post.title }}</h1>
+<hr>
+<p>{{ post.text }}</p>
+
+<hr>
+
+<div>
+  Categories:
+  {% for category in post.category.all %}
+    <a href="{{ category.get_absolute_url }}">{{ category }}</a>{% if not forloop.last %}, {% endif %}
+  {% endfor %}
+</div>
+
+<div>
+  Tags:
+  {% for tag in post.tag.all %}
+    <a href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %}, {% endif %}
+  {% endfor %}
+</div>
+
+<hr>
+
+<p>
+  Comments:
+  {% for comment in post.comment_set.all %}
+    <div>{{ comment.text }}</div>
+  {% empty %}
+    <div>No comments here yet.</div>
+  {% endfor %}
+  
+  <a href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+</p>
+
+<hr>
+
+<p>
+  <a href="{% url 'posts' %}">Back to list of posts</a>
+</p>
